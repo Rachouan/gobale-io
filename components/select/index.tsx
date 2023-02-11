@@ -1,8 +1,9 @@
 import { Fragment, useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { Combobox, Transition } from "@headlessui/react";
 import { ICountry } from "country-state-city";
 import clsx from "clsx";
+import Button from "../button";
 
 export type SelectDataType = {
   label: string;
@@ -10,6 +11,7 @@ export type SelectDataType = {
 };
 export interface SelectProps {
   value?: SelectDataType;
+  placeholder?: string;
   data: SelectDataType[];
   onSelect: (value: any) => void;
   className?: string;
@@ -18,6 +20,7 @@ export interface SelectProps {
 export default function Select({
   value,
   data,
+  placeholder,
   onSelect,
   className,
 }: SelectProps) {
@@ -38,16 +41,15 @@ export default function Select({
 
   return (
     <Combobox value={selected} onChange={setSelected}>
-      <div className={clsx("relative mt-1", className)}>
-        <div className="relative w-full cursor-default rounded overflow-hidden bg-white text-left shadow-sm border focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+      <div className={clsx("relative", className)}>
+        <div className="relative w-full flex cursor-default p-1 rounded overflow-hidden bg-white text-left shadow-sm border border-gray-50 focus:outline-none">
           <Combobox.Input
-            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+            className="w-full px-2 border-none text-lg text-gray-900 focus:outline-none focus:ring-0"
             displayValue={(e: ICountry) => e.name}
+            placeholder={placeholder}
             onChange={(event) => setQuery(event.target.value)}
           />
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronDownIcon className="w-4" />
-          </Combobox.Button>
+          <Button type="submit">Submit</Button>
         </div>
         <Transition
           as={Fragment}
@@ -56,7 +58,7 @@ export default function Select({
           leaveTo="opacity-0"
           afterLeave={() => setQuery("")}
         >
-          <Combobox.Options className="absolute bottom-12 mt-1 max-h-60 w-full overflow-auto rounded bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute bottom-14 mb-2 max-h-60 w-full overflow-auto rounded bg-white p-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredSelect.length === 0 && query !== "" ? (
               <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                 Nothing found.
@@ -66,8 +68,8 @@ export default function Select({
                 <Combobox.Option
                   key={label.toLocaleLowerCase().split(" ").join("-")}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? "bg-teal-600 text-white" : "text-gray-900"
+                    `relative cursor-default select-none rounded p-2 pl-8 ${
+                      active ? "bg-gray-50 text-gray-900" : "text-gray-900"
                     }`
                   }
                   value={value}
@@ -87,7 +89,7 @@ export default function Select({
                             active ? "text-white" : "text-teal-600"
                           }`}
                         >
-                          ✅
+                          <CheckCircleIcon className="w-4" />
                         </span>
                       ) : null}
                     </>

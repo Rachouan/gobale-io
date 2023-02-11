@@ -7,7 +7,11 @@ import { randomBetween } from "@/helpers";
 import { Country, ICountry } from "country-state-city";
 import { useEffect, useState } from "react";
 
-export default function CountryBox() {
+export default function CountryBox({
+  onSelect,
+}: {
+  onSelect: (country: ICountry) => void;
+}) {
   const countries = Country.getAllCountries().map((country) => ({
     label: country.name,
     value: country,
@@ -26,15 +30,16 @@ export default function CountryBox() {
   return (
     <div className="fixed bottom-0 w-full py-8">
       <Container>
-        <form onSubmit={onHandleSubmit} className="w-full">
-          <fieldset className="flex w-full">
-            <Select
-              data={countries}
-              onSelect={(value) => console.log(value)}
-              className="grow-1 w-full"
-            />
-            <Button>Submit</Button>
-          </fieldset>
+        <form
+          onSubmit={onHandleSubmit}
+          className="w-full flex gap-2 align-center"
+        >
+          <Select
+            data={countries}
+            onSelect={(value) => onSelect(value)}
+            className="grow-1 w-full"
+            placeholder="Select a country"
+          />
         </form>
       </Container>
     </div>

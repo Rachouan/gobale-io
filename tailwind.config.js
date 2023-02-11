@@ -8,7 +8,7 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      rachouan: ["degular-display", "sans-serif"],
+      degular: ["degular-display", "sans-serif"],
       ballinger: ["ballinger", "sans-serif"],
     },
     extend: {

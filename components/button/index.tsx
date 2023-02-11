@@ -13,7 +13,10 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={clsx("p-2 border rounded focus:outline-none", className)}
+      className={clsx(
+        "p-2 border border-denim-600 bg-denim-500 text-white rounded ",
+        className
+      )}
       type={type}
     >
       <span>{children}</span>
