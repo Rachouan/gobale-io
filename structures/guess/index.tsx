@@ -1,7 +1,7 @@
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
-import { ICountry } from "country-state-city";
+import { Country } from "@prisma/client";
 
-export default function Guess({ country }: { country: ICountry }) {
+export default function Guess({ country }: { country: Country }) {
   return (
     <div className={`flex gap-2 px-2 py-1 pr-2 bg-white shadow-sm rounded`}>
       <ArrowUpCircleIcon

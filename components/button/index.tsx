@@ -17,7 +17,7 @@ export default function Button({
     <button
       disabled={disabled}
       className={clsx(
-        "p-2 border border-denim-600 bg-denim-500 text-white rounded disabled:bg-gray-50 disabled:text-gray-300 disabled:border-gray-50 disabled:cursor-not-allowed transition-colors",
+        "transition-all p-2 border border-teal-600 bg-teal-500 text-white rounded disabled:bg-gray-50 disabled:text-gray-300 disabled:border-gray-50 disabled:cursor-not-allowed",
         className
       )}
       type={type}
