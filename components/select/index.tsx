@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { ArrowRightIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
 import { Combobox, Transition } from "@headlessui/react";
 import { ICountry } from "country-state-city";
 import clsx from "clsx";
@@ -24,7 +24,7 @@ export default function Select({
   onSelect,
   className,
 }: SelectProps) {
-  const [selected, setSelected] = useState<SelectDataType>(value || data[0]);
+  const [selected, setSelected] = useState<SelectDataType | undefined>(value);
   const [query, setQuery] = useState("");
 
   const filteredSelect =
@@ -42,14 +42,16 @@ export default function Select({
   return (
     <Combobox value={selected} onChange={setSelected}>
       <div className={clsx("relative", className)}>
-        <div className="relative w-full flex cursor-default p-1 rounded overflow-hidden bg-white text-left shadow-sm border border-gray-50 focus:outline-none">
+        <div className="relative w-full flex cursor-default p-2 rounded-md overflow-hidden bg-white text-left shadow-sm focus:outline-none">
           <Combobox.Input
-            className="w-full px-2 border-none text-lg text-gray-900 focus:outline-none focus:ring-0"
+            className="w-full px-2 border-none text-gray-900 focus:outline-none focus:ring-0"
             displayValue={(e: ICountry) => e.name}
             placeholder={placeholder}
             onChange={(event) => setQuery(event.target.value)}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={!selected}>
+            <ArrowRightIcon className="w-4 transition-colors" />
+          </Button>
         </div>
         <Transition
           as={Fragment}
@@ -68,7 +70,7 @@ export default function Select({
                 <Combobox.Option
                   key={label.toLocaleLowerCase().split(" ").join("-")}
                   className={({ active }) =>
-                    `relative cursor-default select-none rounded p-2 pl-8 ${
+                    `relative cursor-default select-none rounded p-3 pl-8 ${
                       active ? "bg-gray-50 text-gray-900" : "text-gray-900"
                     }`
                   }
@@ -85,11 +87,9 @@ export default function Select({
                       </span>
                       {selected ? (
                         <span
-                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                            active ? "text-white" : "text-teal-600"
-                          }`}
+                          className={`absolute inset-y-0 left-0 flex items-center pl-1 text-teal-600`}
                         >
-                          <CheckCircleIcon className="w-4" />
+                          <CheckCircleIcon className="w-6" />
                         </span>
                       ) : null}
                     </>

@@ -3,13 +3,21 @@
 import Button from "@/components/button";
 import Container from "@/components/container";
 import Select from "@/components/select";
-import { randomBetween } from "@/helpers";
+import {
+  angleBetweenCountries,
+  distanceBetweenCountries,
+  randomBetween,
+} from "@/helpers";
+import { ArrowUpCircleIcon, ArrowUpIcon } from "@heroicons/react/24/solid";
 import { Country, ICountry } from "country-state-city";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Guess from "../guess";
 
 export default function CountryBox({
+  country,
   onSelect,
 }: {
+  country: ICountry;
   onSelect: (country: ICountry) => void;
 }) {
   const countries = Country.getAllCountries().map((country) => ({
@@ -17,30 +25,42 @@ export default function CountryBox({
     value: country,
   }));
 
-  const [country, setCountry] = useState<ICountry>();
+  const [guesses, setGuesses] = useState<ICountry[]>([]);
+  const [currentSelect, setCurrentSelect] = useState<ICountry>(country);
 
   const onHandleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(country);
+    if (!currentSelect) return;
+    setGuesses((prev) => [...prev, currentSelect]);
   };
 
-  useEffect(() => {
-    setCountry(countries[randomBetween(0, countries.length - 1)].value);
-  }, []);
+  const onHandleSelect = (country: ICountry) => {
+    setCurrentSelect(country);
+    onSelect(country);
+  };
+
   return (
-    <div className="fixed bottom-0 w-full py-8">
+    <div className="absolute bottom-0 w-full py-4">
       <Container>
-        <form
-          onSubmit={onHandleSubmit}
-          className="w-full flex gap-2 align-center"
-        >
-          <Select
-            data={countries}
-            onSelect={(value) => onSelect(value)}
-            className="grow-1 w-full"
-            placeholder="Select a country"
-          />
-        </form>
+        <div className="flex flex-col gap-2">
+          <div className="flex gap-2">
+            {guesses.map((c) => (
+              <Guess country={c} key={`guess-${c.isoCode}]`} />
+            ))}
+          </div>
+
+          <form
+            onSubmit={onHandleSubmit}
+            className="w-full flex gap-2 align-center"
+          >
+            <Select
+              data={countries}
+              onSelect={onHandleSelect}
+              className="grow-1 w-full"
+              placeholder="Select a country"
+            />
+          </form>
+        </div>
       </Container>
     </div>
   );

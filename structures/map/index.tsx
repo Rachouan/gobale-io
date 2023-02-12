@@ -15,14 +15,14 @@ export default function Map({ longitude = -70.9, latitude = 42.35 }: MapProps) {
   const map = useRef(null);
   const [lng, setLng] = useState(longitude);
   const [lat, setLat] = useState(latitude);
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(2);
 
   useEffect(() => {
     if (!map.current) return;
     // @ts-ignore
     map.current.flyTo({
       center: [lng, lat],
-      zoom: 4,
+      zoom,
     });
   }, [lat, lng]);
 
@@ -43,7 +43,5 @@ export default function Map({ longitude = -70.9, latitude = 42.35 }: MapProps) {
     });
   }, []);
 
-  return (
-    <div ref={mapContainer} className="map-container w-full min-h-screen" />
-  );
+  return <div ref={mapContainer} className="map-container w-full flex-grow" />;
 }

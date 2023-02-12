@@ -1,11 +1,13 @@
 "use client";
 
+import { randomBetween } from "@/helpers";
 import CountryBox from "@/structures/country-box";
 import Map from "@/structures/map";
-import { ICountry } from "country-state-city";
+import { Country, ICountry } from "country-state-city";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  const countries = Country.getAllCountries();
   const [country, setCountry] = useState<ICountry>();
 
   const [coordinates, setCoordinates] = useState<{
@@ -22,9 +24,12 @@ export default function Home() {
   }, [country]);
 
   return (
-    <section>
+    <section className="flex flex-col flex-grow relative">
       <Map {...coordinates} />
-      <CountryBox onSelect={setCountry} />
+      <CountryBox
+        onSelect={setCountry}
+        country={countries[randomBetween(0, countries.length - 1)]}
+      />
     </section>
   );
 }

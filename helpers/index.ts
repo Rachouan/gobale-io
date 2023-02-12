@@ -23,5 +23,20 @@ export const distanceBetweenCountries = (a: ICountry, b: ICountry) => {
 
   const e = R * d; // in metres
 
-  return e / 1000;
+  return (e / 1000).toFixed(2);
+};
+
+export const angleBetweenCountries = (a: ICountry, b: ICountry) => {
+  const lat1 = Number(a.latitude);
+  const lon1 = Number(a.longitude);
+  const lat2 = Number(b.latitude);
+  const lon2 = Number(b.longitude);
+
+  const y = Math.sin(lon2 - lon1) * Math.cos(lat2);
+  const x =
+    Math.cos(lat1) * Math.sin(lat2) -
+    Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+  const brng = Math.atan2(y, x);
+
+  return (brng * 180) / Math.PI;
 };
