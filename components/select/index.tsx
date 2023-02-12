@@ -37,7 +37,7 @@ export default function Select({
   useEffect(() => {
     setQuery(selected?.label || "");
     onSelect(selected);
-  }, [selected]);
+  }, [selected, onSelect]);
 
   return (
     <Combobox value={selected} onChange={setSelected}>

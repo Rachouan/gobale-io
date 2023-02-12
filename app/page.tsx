@@ -9,8 +9,6 @@ export default async function Home() {
     },
   });
 
-  console.log(game);
-
   if (!game) return <div>loading...</div>;
 
   return <Game countries={countries} game={game} />;
