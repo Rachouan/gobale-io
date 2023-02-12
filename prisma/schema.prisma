@@ -18,4 +18,14 @@ model Country {
   isoCode   String
   latitude  Float
   longitude Float
+  Game      Game[]
+}
+
+model Game {
+  id        Int      @id @default(autoincrement())
+  countryId Int
+  country   Country  @relation(fields: [countryId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@index([countryId])
 }

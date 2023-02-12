@@ -1,10 +1,17 @@
 import Game from "@/structures/game";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/server/db/client";
 
 export default async function Home() {
   const countries = await prisma.country.findMany();
+  const game = await prisma.game.findFirst({
+    include: {
+      country: true,
+    },
+  });
 
-  return <Game countries={countries} />;
+  console.log(game);
+
+  if (!game) return <div>loading...</div>;
+
+  return <Game countries={countries} game={game} />;
 }

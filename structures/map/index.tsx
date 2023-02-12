@@ -24,6 +24,8 @@ export default function Map({ longitude = -70.9, latitude = 42.35 }: MapProps) {
       center: [lng, lat],
       zoom,
     });
+    // @ts-ignore
+    map.current.scrollZoom.disable();
   }, [lat, lng]);
 
   useEffect(() => {

@@ -23,7 +23,7 @@ export default function Footer() {
           <p className="items-center inline-flex gap-1">
             Wanna check the source?{" "}
             <a
-              href="https://github.com/rachouan/globale-io"
+              href="https://github.com/Rachouan/gobale-io"
               target="_blank"
               className="items-center inline-flex gap-1 hover:text-gray-600"
             >
