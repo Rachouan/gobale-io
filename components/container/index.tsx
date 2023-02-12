@@ -8,7 +8,9 @@ export default function Container({
   className?: string;
 }) {
   return (
-    <div className={clsx("mx-auto px-2 md:px-4 max-w-screen-sm", className)}>
+    <div
+      className={clsx("mx-auto px-2 md:px-4 max-w-screen-sm w-full", className)}
+    >
       {children}
     </div>
   );

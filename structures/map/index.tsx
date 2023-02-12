@@ -15,7 +15,7 @@ export default function Map({ longitude = -70.9, latitude = 42.35 }: MapProps) {
   const map = useRef(null);
   const [lng, setLng] = useState(longitude);
   const [lat, setLat] = useState(latitude);
-  const [zoom, setZoom] = useState(2);
+  const [zoom, setZoom] = useState(1.5);
 
   useEffect(() => {
     if (!map.current) return;

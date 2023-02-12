@@ -26,13 +26,13 @@ export default function Game({ countries, game }: GameProps) {
 
   const addGuess = (country: Country, correct: boolean) => {
     setGuesses((g) => [
-      ...g,
       {
         country,
         distance: distanceBetweenCountries(country, game.country),
         angle: angleBetweenCountries(country, game.country),
         correct,
       },
+      ...g,
     ]);
   };
 
@@ -51,17 +51,35 @@ export default function Game({ countries, game }: GameProps) {
     <section className="flex flex-col flex-grow relative">
       <Map latitude={country.latitude} longitude={country.longitude} />
 
-      <div className="absolute bottom-0 w-full py-4">
+      <div className="absolute bottom-0 w-full py-4 flex flex-col gap-4">
+        <div>
+          <Container className="pr-0">
+            {guesses.length <= 0 ? (
+              <div className="text-white">
+                <div>
+                  <h3>Start guessing</h3>
+                  <p className="opacity-70 text-sm">
+                    Type a name of the country.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div
+                className="flex gap-2 overflow-x-auto overflow-visible pr-2"
+                style={{
+                  scrollbarColor: "transparent transparent",
+                  scrollbarWidth: "none",
+                }}
+              >
+                {guesses.map((g) => (
+                  <Guess {...g} key={`guess-${g.country.isoCode}]`} />
+                ))}
+              </div>
+            )}
+          </Container>
+        </div>
         <Container>
-          <div className="flex flex-col gap-4">
-            <div className="flex gap-2">
-              {guesses.map((g) => (
-                <Guess {...g} key={`guess-${g.country.isoCode}]`} />
-              ))}
-            </div>
-
-            <CountrySearch onSelect={onSelect} />
-          </div>
+          <CountrySearch onSelect={onSelect} />
         </Container>
       </div>
     </section>
